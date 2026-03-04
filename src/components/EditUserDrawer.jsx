@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Button, Drawer, Form, Input, DatePicker, Select, message, Avatar, Upload } from 'antd';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
-import { format } from 'date-fns';
-import axiosClient from "../utils/axiosClient";
 import { CameraOutlined, UserOutlined } from '@ant-design/icons';
+import { updateUser } from '../api/userService';
+import { uploadFile } from '../api/fileService';
 
 const EditUserDrawer = (props) => {
     const [open, setOpen] = useState(false);
@@ -14,12 +14,15 @@ const EditUserDrawer = (props) => {
     const [avatarFile, setAvatarFile] = useState(null);
     const [avatarPreview, setAvatarPreview] = useState(null);
     const { userDetails, refresh, SetRefresh } = props;
+
     const showDrawer = () => {
         setOpen(true);
     };
+
     const onClose = () => {
         setOpen(false);
     };
+
     useEffect(() => {
         form.setFieldsValue({
             ...userDetails,
@@ -28,32 +31,31 @@ const EditUserDrawer = (props) => {
         });
         setAvatar(userDetails.avatar);
     }, [])
+
     const beforeUpload = (file) => {
         setAvatarFile(file);
         setAvatarPreview(URL.createObjectURL(file));
         return false;
     }
+
     async function onFinish(values) {
         try {
             let avatarFilename = avatar;
             if (avatarFile) {
                 const uploadRes = await uploadFile(avatarFile);
-                avatarFilename = response.data.file.fileName;
+                avatarFilename = uploadRes.data.file.fileName;
             }
-            const payload = {
-                ...values,
-                dateOfBirth: values.dateOfBirth ? format(values.dateOfBirth, "yyyy-MM-dd") : undefined,
-                avatar: avatarFilename
-            }
-            const response = await axiosClient.put('/user/update/' + userDetails._id, payload);
-            message.success(response.data.message);
+
+            await updateUser(userDetails._id, values, avatarFilename);
+            message.success("User updated successfully");
             SetRefresh(!refresh);
-            onclose();
+            onClose();
         } catch (error) {
             console.log(error);
-            message.error(error.response.data.message);
+            message.error(error.response?.data?.message || "Failed to update user");
         }
     }
+
     return (
         <>
             <Button type="primary" size='small' onClick={showDrawer}>
