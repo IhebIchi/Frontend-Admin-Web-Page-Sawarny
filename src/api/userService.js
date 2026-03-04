@@ -38,15 +38,6 @@ export async function updateUser(userId, values, avatarFilename) {
     }
 }
 
-/**
- * Edit an existing user (alias for updateUser - backward compatibility)
- */
-export async function editUser(values, avatarFilename) {
-    if (values._id || values.id) {
-        return updateUser(values._id || values.id, values, avatarFilename);
-    }
-    throw new Error("User ID is required to edit user");
-}
 
 /**
  * List all users
