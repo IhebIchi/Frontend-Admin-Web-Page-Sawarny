@@ -52,7 +52,7 @@ const EditUserDrawer = (props) => {
             onClose();
         } catch (error) {
             console.log(error);
-            message.error(error.response?.data?.message || "Failed to update user");
+            message.error(error.message || "Failed to update user");
         }
     }
 

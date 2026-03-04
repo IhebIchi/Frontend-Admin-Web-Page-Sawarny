@@ -34,7 +34,7 @@ export async function updateUser(userId, values, avatarFilename) {
         const response = await axiosClient.put('/user/update/' + userId, payload);
         return response;
     } catch (error) {
-        throw error;
+        throw error.response.data.message;
     }
 }
 
@@ -55,7 +55,7 @@ export async function listUsers() {
     try {
         return await axiosClient.get('/user/');
     } catch (error) {
-        throw error;
+        throw error.response.data.message;
     }
 }
 
