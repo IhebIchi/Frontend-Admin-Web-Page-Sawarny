@@ -11,10 +11,11 @@ import { listUsers } from '../../api/userService';
 const roleColors = {
     ADMIN: "red",
     USER: "blue",
-    PHOTOGRAPHER: "purple"
+    PHOTOGRAPHER: "purple",
+    VIDEOGRAPHER: "green",
+    HYBRID: "orange",
+    STUDIO: "cyan"
 };
-
-
 
 const UsersList = () => {
     const [users, setUsers] = useState([]);

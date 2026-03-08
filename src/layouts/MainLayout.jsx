@@ -46,12 +46,6 @@ function MainLayout() {
       getItem('User Reports', 'users-reports', null, '/user/reports'),
     ]),
 
-    getItem('Photographers', 'photographers', <CameraOutlined />, null, [
-      getItem('All Photographers', 'photographers-all', null, '/photographers/all'),
-      getItem('Add Photographer', 'add-photographer', null, '/photographers/addphotographer'),
-      getItem('Reviews & Ratings', 'photographers-reviews', null, '/photographers/reviews'),
-    ]),
-
 
     getItem('Events', 'events', <CalendarOutlined />, null, [
       getItem('All Events', 'events-all', null, '/events/all'),

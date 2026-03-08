@@ -104,7 +104,11 @@ const AddUser = () => {
                         options={[
                             { value: 'ADMIN', label: 'Admin' },
                             { value: 'USER', label: 'Client' },
-                            { value: 'PHOTOGRAPHER', label: 'Photographer' },]}
+                            { value: 'PHOTOGRAPHER', label: 'Photographer' },
+                            { value: 'VIDEOGRAPHER', label: 'Videographer' },
+                            { value: 'HYBRID', label: 'Hybrid' },
+                            { value: 'STUDIO', label: 'Studio' },
+                        ]}
                     />
                 </Form.Item>
 
