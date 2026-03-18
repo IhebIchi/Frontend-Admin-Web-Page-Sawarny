@@ -1,6 +1,8 @@
-import axois from 'axios';
-const axiosClient = axois.create({
-  baseURL: import.meta.env.VITE_API_URL,
+import axios from 'axios';
+import { message } from 'antd';
+
+const axiosClient = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
 });
 
 axiosClient.interceptors.request.use(
@@ -15,6 +17,7 @@ axiosClient.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
 axiosClient.interceptors.response.use(
     (response) => {
         return response;
@@ -28,4 +31,6 @@ axiosClient.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
 export default axiosClient;
+

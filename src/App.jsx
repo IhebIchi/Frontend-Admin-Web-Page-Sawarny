@@ -12,10 +12,6 @@ import Overview from './pages/Dashboard/Overview';
 import RecentActivity from './pages/Dashboard/RecentActivity';
 import Statistics from './pages/Dashboard/Statistics';
 
-import AllPhotographers from './pages/Photographers/AllPhotographers';
-import ReviewsRatings from './pages/Photographers/ReviewsRatings';
-import AddPhotographer from './pages/Photographers/AddPhotographer';
-
 import AllBookings from './pages/Bookings/AllBookings';
 import Pending from './pages/Bookings/Pending';
 
@@ -88,10 +84,6 @@ function App() {
           <Route path='/payments/pending' element={<PendingPayments/>}/>
           <Route path='/payments/refunds' element={<Refunds/>}/>
           <Route path='/payments/transactions' element={<Transactions/>}/>
-          
-          <Route path='/photographers/addphotographer' element={<AddPhotographer/>}/>
-          <Route path='/photographers/all' element={<AllPhotographers/>}/>
-          <Route path='/photographers/reviews' element={<ReviewsRatings/>}/>
           
           <Route path='/settings/general' element={<GeneralSettings/>}/>
           <Route path='/settings/security' element={<Security/>}/>

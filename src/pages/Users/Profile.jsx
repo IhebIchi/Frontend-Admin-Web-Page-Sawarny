@@ -12,7 +12,7 @@ const Profile = () => {
             <h4>My Profile</h4>
             <Divider />
             <Card style={{ maxWidth: 600 }}>
-                <div style={{display:"flex",alignItems:"center",gap:16,marginBottom:24 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
                     <Avatar
                         src={user?.avatar ? `http://localhost:3000/uploads/${user.avatar}` : undefined}
                         icon={!user?.avatar && <UserOutlined />}
@@ -20,23 +20,39 @@ const Profile = () => {
                     />
                     <div>
                         <h3>{user?.firstName} {user?.lastName}</h3>
-                        <Tag color={user?.role === 'admin' ? 'red' : user?.role === 'photographer' ? 'purple' : 'blue'}>{user?.role}</Tag>
+                        <Tag
+                            color={
+                                user?.role === 'admin' ? 'red' :
+                                    user?.role === 'photographer' ? 'purple' :
+                                        user?.role === 'videographer' ? 'green' :
+                                            user?.role === 'hybrid' ? 'orange' :
+                                                user?.role === 'studio' ? 'cyan' :
+                                                    'blue'
+                            }>{user?.role}</Tag>
                     </div>
                 </div>
-                <Descriptions column={1}bordered>
+                <Descriptions column={1} bordered>
                     <Descriptions.Item label="Email">{user?.email}</Descriptions.Item>
                     <Descriptions.Item label="First Name">{user?.firstName}</Descriptions.Item>
                     <Descriptions.Item label="Last Name">{user?.lastName}</Descriptions.Item>
                     <Descriptions.Item label="Date of Birth">{user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : 'N/A'}</Descriptions.Item>
-                    <Descriptions.Item label="Role"><Tag color={user?.role === 'admin' ? 'red' : user?.role === 'photographer' ? 'purple' : 'blue'}>{user?.role}</Tag></Descriptions.Item>
+                    <Descriptions.Item label="Role"><Tag
+                        color={
+                            user?.role === 'admin' ? 'red' :
+                                user?.role === 'photographer' ? 'purple' :
+                                    user?.role === 'videographer' ? 'green' :
+                                        user?.role === 'hybrid' ? 'orange' :
+                                            user?.role === 'studio' ? 'cyan' :
+                                                'blue'
+                        }>{user?.role}</Tag></Descriptions.Item>
                     <Descriptions.Item label="Created At">{user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</Descriptions.Item>
                     <Descriptions.Item label="Phone">{user?.phone || 'N/A'}</Descriptions.Item>
                     <Descriptions.Item label="Address">{user?.address || 'N/A'}</Descriptions.Item>
-                    
+
                 </Descriptions>
-                <div style={{marginTop:16}}>
-                    <Link to="/change-password" style={{color: '#25c5ff', textDecoration: 'none'}}>
-                        <Button icon={<LockOutlined/>}>Change Password</Button>
+                <div style={{ marginTop: 16 }}>
+                    <Link to="/change-password" style={{ color: '#25c5ff', textDecoration: 'none' }}>
+                        <Button icon={<LockOutlined />}>Change Password</Button>
                     </Link>
                 </div>
             </Card>

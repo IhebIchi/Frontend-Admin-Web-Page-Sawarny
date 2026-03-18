@@ -1,14 +1,12 @@
 import { Divider, Form, Input, Button, DatePicker, Select, message, Avatar, Upload } from 'antd'
-import axiosClient from '../../utils/axiosClient';
-import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from "dayjs";
 import { CameraOutlined, UserOutlined } from '@ant-design/icons';
+import { getUserById, updateUser } from '../../api/userService';
+import { uploadFile } from '../../api/fileService';
 
 const EditUser = () => {
-
-
     const [form] = Form.useForm();
     const [avatar, setAvatar] = useState(null);
     const [avatarFile, setAvatarFile] = useState(null);
@@ -19,7 +17,7 @@ const EditUser = () => {
     useEffect(() => {
         async function getById() {
             try {
-                const response = await axiosClient.get('/user/' + id);
+                const response = await getUserById(id);
 
                 form.setFieldsValue({
                     ...response.data.user,
@@ -44,17 +42,19 @@ const EditUser = () => {
     }
 
     async function onFinish(values) {
-        
         try {
             let avatarFilename = avatar;
-            if(avatarFile){
+            if (avatarFile) {
                 const uploadRes = await uploadFile(avatarFile);
                 avatarFilename = uploadRes.data.file.fileName;
             }
-           
+
+            await updateUser(id, values, avatarFilename);
+            message.success("User updated successfully");
+            navigate('/users');
         } catch (error) {
             console.log(error);
-            message.error(error.response.data.message);
+            message.error(error.response?.data?.message || "Failed to update user");
         }
     }
     return (
@@ -64,8 +64,8 @@ const EditUser = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 23 }}>
                 <Avatar
                     size={64}
-                    src={avatarPreview || (avatar ?`http://localhost:3000/uploads/${avatar}`:undefined)}
-                    icon={!avatarPreview && !avatar&& <UserOutlined />}
+                    src={avatarPreview || (avatar ? `http://localhost:3000/uploads/${avatar}` : undefined)}
+                    icon={!avatarPreview && !avatar && <UserOutlined />}
                 />
                 <Upload
                     beforeUpload={beforeUpload}
@@ -114,7 +114,11 @@ const EditUser = () => {
                         options={[
                             { value: 'ADMIN', label: 'Admin' },
                             { value: 'USER', label: 'Client' },
-                            { value: 'PHOTOGRAPHER', label: 'Photographer' },]}
+                            { value: 'PHOTOGRAPHER', label: 'Photographer' },
+                            { value: 'VIDEOGRAPHER', label: 'Videographer' },
+                            { value: 'HYBRID', label: 'Hybrid' },
+                            { value: 'STUDIO', label: 'Studio' },
+                        ]}
                     />
                 </Form.Item>
 

@@ -1,17 +1,17 @@
-import { Button, Divider, Form, Input,message } from 'antd'
+import { Button, Divider, Form, Input, message } from 'antd'
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { changePassword } from '../../api/authService';
 
 const ChangePassword = () => {
     const [form] = Form.useForm();
-    const navigate = useNavigate();
 
-    async function onFinish(values) { 
+    async function onFinish(values) {
         try {
-           const response=await changePassword(values);
-           message.success(response.data.message || "Password changed successfully");
+            const response = await changePassword(values);
+            message.success(response.data.message || "Password changed successfully");
+            form.resetFields();
         } catch (error) {
-            message.error(error.message || "Failed to change password");
+            message.error(error.response?.data?.message || "Failed to change password");
         }
     }
     return (
@@ -29,7 +29,7 @@ const ChangePassword = () => {
                     { required: true, message: 'Please enter your current password' },
                     { min: 8, message: 'Password must be at least 8 characters' },
                     { max: 32, message: 'Password must be less than 32 characters' }
-                    ]}>
+                ]}>
                     <Input.Password placeholder='Current Password' />
                 </Form.Item>
                 <Form.Item name="newPassword" label="New Password" rules={[
@@ -53,4 +53,4 @@ const ChangePassword = () => {
     )
 }
 
-export default ChangePassword
+export default ChangePassword;
